@@ -1,0 +1,44 @@
+---
+const products = [
+  {
+    name: 'Meat Bone Meal',
+    desc: 'Sumber protein & mineral untuk formulasi pakan.',
+    image: 'https://images.unsplash.com/photo-1760159201329-521cd85a5bf9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1470'
+  },
+  {
+    name: 'Poultry Meat Meal',
+    desc: 'Bahan protein hewani berkualitas untuk unggas.',
+    image: 'https://images.unsplash.com/photo-1760159201329-521cd85a5bf9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1470'
+  },
+  {
+    name: 'Garam Pakan',
+    desc: 'Menunjang keseimbangan elektrolit & konsumsi pakan.',
+    image: 'https://images.unsplash.com/photo-1760159201329-521cd85a5bf9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1470'
+  },
+  {
+    name: 'CHITO FARM',
+    desc: 'Produk pendukung kesehatan ternak dari chitosan.',
+    image: 'https://images.unsplash.com/photo-1760159201329-521cd85a5bf9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1470'
+  },
+]
+---
+<section class="section bg-white">
+  <div class="container mx-auto max-w-6xl px-4">
+    <div class="flex items-end justify-between gap-6">
+      <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">Produk Unggulan</h2>
+      <a href="/products" class="btn btn-ghost">Lihat Semua</a>
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {products.map((p) => (
+        <article class="card overflow-hidden" aria-label={p.name}>
+          <img src={p.image || "/placeholder.svg"} alt={p.name} class="w-full h-40 object-cover" loading="lazy" />
+          <div class="p-5">
+            <h3 class="font-semibold">{p.name}</h3>
+            <p class="text-sm text-muted mt-1">{p.desc}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
