@@ -1,59 +1,24 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-const page = { title: 'Tentang CSN — Sejarah, Fokus, Visi & Misi' }
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Hero from "../components/About/Hero.astro";
+import CompanyValue from "../components/About/CompanyValue.astro";
+import CTA from "../components/About/CTA.astro";
+import Profile from "../components/About/Profile.astro";
+import Service from "../components/About/Service.astro";
+import VisMis from "../components/About/VisMis.astro";
+import Footer from "../components/Footer.astro";
 ---
-<BaseLayout {...page}>
-  <section class="section">
-    <div class="container">
-      <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">Tentang Kami</h1>
-      <p class="mt-4 text-muted leading-relaxed">
-        CSN berdiri pada tahun <strong>2018</strong> dengan tujuan membangun rantai pasok bahan baku pakan ternak yang andal dan efisien.
-        Kami beroperasi sebagai <strong>supplier dan distributor</strong> yang fokus pada kualitas, konsistensi, dan layanan tepat waktu.
-      </p>
 
-      <div class="mt-10 grid md:grid-cols-2 gap-10">
-        <article>
-          <h2 class="text-xl font-semibold">Fokus Bisnis</h2>
-          <p class="mt-3 text-sm leading-relaxed text-muted">
-            Penyediaan bahan baku pakan ternak seperti Meat Bone Meal, Poultry Meat Meal, Garam Pakan, serta produk pendukung kesehatan ternak.
-            Kami melayani kebutuhan <strong>feedmill</strong>, <strong>poultry shop</strong>, dan <strong>peternakan</strong>.
-          </p>
-        </article>
-
-        <article>
-          <h2 class="text-xl font-semibold">Komitmen Kualitas</h2>
-          <p class="mt-3 text-sm leading-relaxed text-muted">
-            Seluruh pasokan kami berasal <strong>tangan pertama tanpa perantara</strong> untuk menjaga traceability dan stabilitas kualitas.
-            Setiap batch dievaluasi agar spesifikasi sesuai standar formulasi pakan.
-          </p>
-        </article>
-      </div>
-
-      <div class="mt-10 grid md:grid-cols-2 gap-10">
-        <article class="card p-6">
-          <h3 class="text-lg font-semibold">Visi</h3>
-          <p class="mt-2 text-sm text-muted leading-relaxed">
-            Menjadi mitra utama dan tepercaya dalam penyediaan bahan baku pakan ternak di Indonesia dengan layanan profesional dan pasokan berkelanjutan.
-          </p>
-        </article>
-        <article class="card p-6">
-          <h3 class="text-lg font-semibold">Misi</h3>
-          <ul class="mt-2 text-sm text-muted leading-relaxed space-y-2">
-            <li>• Menyediakan bahan baku berkualitas dengan harga kompetitif.</li>
-            <li>• Memastikan kontinuitas pasokan melalui jaringan gudang yang strategis.</li>
-            <li>• Meningkatkan efisiensi operasional pelanggan melalui dukungan teknis dan logistik.</li>
-            <li>• Menjaga integritas dan transparansi dalam setiap proses bisnis.</li>
-          </ul>
-        </article>
-      </div>
-
-      <div class="mt-12 card p-6">
-        <h2 class="text-xl font-semibold">Pasar & Target Pelanggan</h2>
-        <p class="mt-3 text-sm text-muted leading-relaxed">
-          Layanan kami dirancang untuk kebutuhan industri pakan: <strong>feedmill</strong>, <strong>poultry shop</strong>, dan <strong>peternakan</strong>.
-          Dengan jangkauan distribusi luas, kami mampu memenuhi permintaan reguler maupun proyek skala besar di berbagai daerah.
-        </p>
-      </div>
-    </div>
-  </section>
+<BaseLayout title="CSN — Supplier & Distributor Bahan Baku Pakan">
+  <Navbar />
+  <main class="pb-20">
+    <Hero />
+    <Profile />
+    <VisMis />
+    <CompanyValue />
+    <Service />
+    <CTA />
+  </main>
+  <Footer />
 </BaseLayout>
