@@ -1,0 +1,192 @@
+---
+// src/components/Products/ProductsParent.astro
+import ProductsShowcase from "./ProductsShowcase.astro";
+
+const productsData = [
+  {
+    id: 1,
+    name: 'Meat Bone Meal (MBM)',
+    category: 'Protein Hewani',
+    shortDesc: 'Sumber protein & mineral premium',
+    fullDesc: 'Tepung yang terbuat dari sisa pemotongan daging dan tulang ternak (tidak termasuk bulu, kuku, darah dan kotoran). Tinggi protein dan kalsium, merupakan sumber protein hewani yang lebih ekonomis.',
+    image: 'https://images.unsplash.com/photo-1628008912207-49e8a0a76dc8?w=800&q=80',
+    specs: [
+      { label: 'Crude Protein', value: '± 50%' },
+      { label: 'Fat', value: 'max 15%' },
+      { label: 'Ash', value: 'max 30%' }
+    ],
+    grades: [
+      { name: 'Grade I', detail: 'Protein 50%' },
+      { name: 'Grade II', detail: 'Protein 48-49%' },
+      { name: 'Grade III', detail: 'Protein <48%' }
+    ],
+    color: 'from-green-500 to-emerald-600',
+    icon: '🥩'
+  },
+  {
+    id: 2,
+    name: 'Poultry Meat Meal (PMM)',
+    category: 'Protein Unggas',
+    shortDesc: 'Bahan protein berkualitas tinggi',
+    fullDesc: 'Tepung yang terbuat dari sisa pemotongan ternak Unggas dengan bentuk sempurna dari asam amino dan lemak. Sangat cocok untuk campuran pakan ternak ayam dan ruminansia dengan nutrisi seimbang.',
+    image: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=800&q=80',
+    specs: [
+      { label: 'Crude Protein', value: '± 60-65%' },
+      { label: 'Fat', value: 'max 13%' },
+      { label: 'Ash', value: 'max 15%' }
+    ],
+    grades: [
+      { name: 'Protein 60%', detail: '60% Protein Content' },
+      { name: 'Protein 65%', detail: '65% Protein Content' }
+    ],
+    color: 'from-green-500 to-emerald-600',
+    icon: '🐔'
+  },
+  {
+    id: 3,
+    name: 'Garam Pakan',
+    category: 'Mineral Essentials',
+    shortDesc: 'Keseimbangan elektrolit optimal',
+    fullDesc: 'Garam yang telah diproses khusus untuk digunakan dalam campuran pakan. Diformulasikan untuk memenuhi kebutuhan mineral (Ca, Mg & NaCl) ternak dengan kandungan NaCl 98%.',
+    image: 'https://images.unsplash.com/photo-1608797178974-15b35a64ede9?w=800&q=80',
+    specs: [
+      { label: 'NaCl', value: '98.00%' },
+      { label: 'Moisture', value: '0.44%' },
+      { label: 'Tersedia', value: '4 Jenis' }
+    ],
+    grades: [
+      { name: 'Garam Halus', detail: 'Fine Texture' },
+      { name: 'Garam Kasar', detail: 'Coarse Texture' },
+      { name: 'Granule', detail: 'Granulated Form' },
+      { name: 'Tepung Garam', detail: 'Powder Form' }
+    ],
+    color: 'from-green-500 to-emerald-600',
+    icon: '🧂'
+  },
+  {
+    id: 4,
+    name: 'CHITO FARM',
+    category: 'Suplemen Alami',
+    shortDesc: 'Suplemen kesehatan ternak modern',
+    fullDesc: 'Suplemen alami dari ekstraksi cangkang hewan laut seperti udang dan kepiting. Membantu meningkatkan imun tubuh ternak, fungsi pencernaan, dan mendukung produksi yang lebih efisien dengan mengurangi kebutuhan antibiotik.',
+    image: 'https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?w=800&q=80',
+    specs: [
+      { label: 'Chitosan', value: '25,000 ppm' },
+      { label: 'Acetic Acid', value: '20,000 ppm' },
+      { label: 'Packaging', value: '1L, 20L, 30L' }
+    ],
+    grades: [
+      { name: 'Kemasan 1L', detail: 'Small Pack' },
+      { name: 'Kemasan 20L', detail: 'Medium Pack' },
+      { name: 'Kemasan 30L', detail: 'Large Pack' }
+    ],
+    color: 'from-green-500 to-emerald-600',
+    icon: '🌿'
+  }
+];
+---
+
+<style>
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+    50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.6); }
+  }
+
+  .float { animation: float 3s ease-in-out infinite; }
+  .slide-in-left { animation: slideInLeft 0.6s ease-out; }
+  .slide-in-right { animation: slideInRight 0.6s ease-out; }
+  .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+  .product-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .product-card:hover {
+    transform: translateY(-8px);
+  }
+
+  .product-card.active {
+    transform: scale(1.02);
+  }
+
+  .image-container {
+    perspective: 1200px;
+  }
+
+  .image-container img {
+    transition: transform 0.3s ease-out;
+  }
+
+  .image-container:hover img {
+    transform: scale(1.08) rotateX(2deg);
+  }
+</style>
+
+<!-- Hero Section -->
+<section class="relative py-16 md:py-20 overflow-hidden bg-white">
+  <div class="container mx-auto max-w-6xl px-4 relative z-10 text-center">
+    <div class="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-emerald-500/10 rounded-full border border-emerald-500/20">
+      <span class="text-emerald-600 text-sm font-medium">✨ Produk Unggulan</span>
+    </div>
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight">
+      Solusi Pakan Ternak Terlengkap
+    </h1>
+    <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">
+      Klik produk untuk melihat spesifikasi lengkap, grade, dan detail unggulan setiap produk
+    </p>
+  </div>
+</section>
+
+<!-- Main Product Showcase -->
+<section class="py-16 md:py-24 bg-white">
+  <div class="container mx-auto max-w-7xl px-4">
+    <ProductsShowcase products={productsData} />
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto max-w-6xl px-4">
+    <div class="rounded-3xl px-8 py-12 md:px-12 md:py-16 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white shadow-2xl">
+      <div class="max-w-3xl">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Siap Meningkatkan Kualitas Pakan Anda?</h2>
+        <p class="text-lg text-emerald-50 mb-8">Hubungi tim sales kami untuk konsultasi gratis dan penawaran terbaik sesuai kebutuhan bisnis Anda.</p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact" class="btn bg-white text-emerald-700 hover:bg-emerald-50 font-semibold px-8 py-3 rounded-lg transition-all">
+            Hubungi Sales Kami
+          </a>
+          <a href="/about" class="btn bg-white/20 border border-white text-white hover:bg-white/30 font-semibold px-8 py-3 rounded-lg transition-all">
+            Pelajari Lebih Lanjut
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

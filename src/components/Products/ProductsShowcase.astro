@@ -1,0 +1,167 @@
+---
+// src/components/Products/ProductShowcase.astro
+
+interface Product {
+  id: number;
+  name: string;
+  category: string;
+  shortDesc: string;
+  fullDesc: string;
+  image: string;
+  specs: Array<{ label: string; value: string }>;
+  grades: Array<{ name: string; detail: string }>;
+  color: string;
+  icon: string;
+}
+
+interface Props {
+  products: Product[];
+}
+
+const { products } = Astro.props;
+---
+
+<div class="grid lg:grid-cols-5 gap-8 lg:gap-12">
+  <!-- Product Cards Navigation (Left) -->
+  <div class="lg:col-span-2 flex flex-col gap-4">
+    <div class="space-y-3" id="product-nav">
+      {products.map((prod, idx) => (
+        <button
+          class={`product-card w-full p-6 rounded-2xl border-2 transition-all text-left group ${
+            idx === 0
+              ? `bg-gradient-to-br ${prod.color} text-white border-white/50 shadow-lg pulse-glow active`
+              : 'bg-slate-50 text-slate-900 border-slate-200 hover:bg-slate-100 hover:border-slate-300'
+          }`}
+          data-product-id={prod.id}
+          data-product-index={idx}
+        >
+          <div class="flex items-start gap-3 mb-2">
+            <span class="text-3xl float">{prod.icon}</span>
+            <div class="flex-1">
+              <h3 class="font-bold text-lg">{prod.name}</h3>
+              <p class="text-sm opacity-80">{prod.category}</p>
+            </div>
+          </div>
+          <p class="text-sm opacity-90">{prod.shortDesc}</p>
+          <div class="mt-3 flex items-center gap-2 text-xs opacity-75 group-hover:opacity-100">
+            <span>Lihat Detail</span>
+            <span>→</span>
+          </div>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Product Details Display (Right) -->
+  <div class="lg:col-span-3">
+    <div id="product-display" class="space-y-8">
+      {/* Will be replaced by script */}
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ products }}>
+  // Render product display
+  function renderProduct(index) {
+    const product = products[index];
+    if (!product) return;
+
+    const displayEl = document.getElementById('product-display');
+    if (!displayEl) return;
+
+    displayEl.innerHTML = `
+      <div class="slide-in-right">
+        <!-- Image Container -->
+        <div class="image-container relative h-80 md:h-96 rounded-2xl overflow-hidden group shadow-2xl">
+          <div class="absolute inset-0 bg-gradient-to-br ${product.color} opacity-20"></div>
+          <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="space-y-4">
+          <h2 class="text-3xl md:text-4xl font-bold text-slate-900">${product.name}</h2>
+          <p class="text-slate-700 text-lg leading-relaxed">${product.fullDesc}</p>
+        </div>
+
+        <!-- Specifications -->
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <h3 class="text-xl font-bold text-slate-900 mb-4">Spesifikasi Produk</h3>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            ${product.specs.map(spec => `
+              <div class="bg-white rounded-lg p-4 border border-slate-200">
+                <p class="text-sm text-slate-600 mb-1">${spec.label}</p>
+                <p class="text-lg font-bold text-emerald-600">${spec.value}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Grades -->
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <h3 class="text-xl font-bold text-slate-900 mb-4">Varian Tersedia</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            ${product.grades.map((grade, idx) => `
+              <div class="flex items-center gap-3 p-4 bg-white rounded-lg border border-slate-200 hover:bg-emerald-50 hover:border-emerald-300 transition-colors cursor-pointer group">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                  ${idx + 1}
+                </div>
+                <div class="flex-1">
+                  <p class="font-semibold text-slate-900">${grade.name}</p>
+                  <p class="text-sm text-slate-600">${grade.detail}</p>
+                </div>
+                <span class="text-emerald-600 group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- CTA Button -->
+        <a href="/contact" class="block w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold py-4 rounded-xl text-center transition-all transform hover:scale-105 shadow-lg">
+          Pesan Sekarang →
+        </a>
+      </div>
+    `;
+  }
+
+  // Initialize
+  function initProductShowcase() {
+    const productNav = document.getElementById('product-nav');
+    if (!productNav) return;
+
+    const buttons = productNav.querySelectorAll('button');
+
+    // Render first product
+    renderProduct(0);
+
+    // Add event listeners
+    buttons.forEach((button) => {
+      button.addEventListener('click', function() {
+        const productIndex = parseInt(this.dataset.productIndex);
+        const product = products[productIndex];
+
+        if (!product) return;
+
+        // Update active button styles
+        buttons.forEach((btn) => {
+          btn.classList.remove('active', 'pulse-glow');
+          btn.className = `product-card w-full p-6 rounded-2xl border-2 transition-all text-left group bg-slate-50 text-slate-900 border-slate-200 hover:bg-slate-100 hover:border-slate-300`;
+        });
+
+        // Set active style
+        this.classList.add('active', 'pulse-glow');
+        this.className = `product-card w-full p-6 rounded-2xl border-2 transition-all text-left group bg-gradient-to-br ${product.color} text-white border-white/50 shadow-lg pulse-glow active`;
+
+        // Render new product
+        renderProduct(productIndex);
+      });
+    });
+  }
+
+  // Ensure DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProductShowcase);
+  } else {
+    initProductShowcase();
+  }
+</script>
