@@ -1,6 +1,13 @@
 ---
 // src/components/Products/ProductsParent.astro
 import ProductsShowcase from "./ProductsShowcase.astro";
+import garam_kasar from '../../assets/garam/garam_kasar.jpeg'
+import garam_halus from '../../assets/garam/garam_halus.jpeg'
+import td1 from '../../assets/tepung_daging/td1.jpeg'
+import td2 from '../../assets/tepung_daging/td2.jpeg'
+import td3 from '../../assets/tepung_daging/td3.jpeg'
+import td4 from '../../assets/tepung_daging/td4.jpeg'
+import td5 from '../../assets/tepung_daging/td5.jpeg'
 
 const productsData = [
   {
@@ -9,7 +16,7 @@ const productsData = [
     category: 'Protein Hewani',
     shortDesc: 'Sumber protein & mineral premium',
     fullDesc: 'Tepung yang terbuat dari sisa pemotongan daging dan tulang ternak (tidak termasuk bulu, kuku, darah dan kotoran). Tinggi protein dan kalsium, merupakan sumber protein hewani yang lebih ekonomis.',
-    image: 'https://images.unsplash.com/photo-1628008912207-49e8a0a76dc8?w=800&q=80',
+    image: '',
     specs: [
       { label: 'Crude Protein', value: '± 50%' },
       { label: 'Fat', value: 'max 15%' },
@@ -20,8 +27,13 @@ const productsData = [
       { name: 'Grade II', detail: 'Protein 48-49%' },
       { name: 'Grade III', detail: 'Protein <48%' }
     ],
+    variants: [
+      { name: 'Grade I', image: `${td1.src}` },
+      { name: 'Grade II', image: `${td2.src}` },
+      { name: 'Grade III', image: `${td3.src}`}
+    ],
     color: 'from-green-500 to-emerald-600',
-    icon: '🥩'
+    icon: ''
   },
   {
     id: 2,
@@ -29,7 +41,7 @@ const productsData = [
     category: 'Protein Unggas',
     shortDesc: 'Bahan protein berkualitas tinggi',
     fullDesc: 'Tepung yang terbuat dari sisa pemotongan ternak Unggas dengan bentuk sempurna dari asam amino dan lemak. Sangat cocok untuk campuran pakan ternak ayam dan ruminansia dengan nutrisi seimbang.',
-    image: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=800&q=80',
+    image: '',
     specs: [
       { label: 'Crude Protein', value: '± 60-65%' },
       { label: 'Fat', value: 'max 13%' },
@@ -39,8 +51,12 @@ const productsData = [
       { name: 'Protein 60%', detail: '60% Protein Content' },
       { name: 'Protein 65%', detail: '65% Protein Content' }
     ],
+    variants: [
+      { name: 'Protein 60%', image: `${td4.src}` },
+      { name: 'Protein 65%', image: `${td5.src}` }
+    ],
     color: 'from-green-500 to-emerald-600',
-    icon: '🐔'
+    icon: ''
   },
   {
     id: 3,
@@ -48,7 +64,7 @@ const productsData = [
     category: 'Mineral Essentials',
     shortDesc: 'Keseimbangan elektrolit optimal',
     fullDesc: 'Garam yang telah diproses khusus untuk digunakan dalam campuran pakan. Diformulasikan untuk memenuhi kebutuhan mineral (Ca, Mg & NaCl) ternak dengan kandungan NaCl 98%.',
-    image: 'https://images.unsplash.com/photo-1608797178974-15b35a64ede9?w=800&q=80',
+    image: '',
     specs: [
       { label: 'NaCl', value: '98.00%' },
       { label: 'Moisture', value: '0.44%' },
@@ -60,8 +76,14 @@ const productsData = [
       { name: 'Granule', detail: 'Granulated Form' },
       { name: 'Tepung Garam', detail: 'Powder Form' }
     ],
+    variants: [
+      { name: 'Garam Halus', image: `${garam_halus.src}` },
+      { name: 'Garam Kasar', image: `${garam_kasar.src}`},
+      { name: 'Granule', image: `${garam_halus.src}` },
+      { name: 'Tepung Garam', image: `${garam_halus.src}` }
+    ],
     color: 'from-green-500 to-emerald-600',
-    icon: '🧂'
+    icon: ''
   },
   {
     id: 4,
@@ -80,8 +102,13 @@ const productsData = [
       { name: 'Kemasan 20L', detail: 'Medium Pack' },
       { name: 'Kemasan 30L', detail: 'Large Pack' }
     ],
+    variants: [
+      { name: 'Kemasan 1L', image: 'https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?w=800&q=80' },
+      { name: 'Kemasan 20L', image: 'https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?w=800&q=80' },
+      { name: 'Kemasan 30L', image: 'https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?w=800&q=80' }
+    ],
     color: 'from-green-500 to-emerald-600',
-    icon: '🌿'
+    icon: ''
   }
 ];
 ---

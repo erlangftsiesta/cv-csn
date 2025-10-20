@@ -10,6 +10,7 @@ interface Product {
   image: string;
   specs: Array<{ label: string; value: string }>;
   grades: Array<{ name: string; detail: string }>;
+  variants: Array<{ name: string; image: string }>; // NEW: Max 4 variants
   color: string;
   icon: string;
 }
@@ -61,10 +62,18 @@ const { products } = Astro.props;
 </div>
 
 <script define:vars={{ products }}>
+  let currentVariantIndex = 0;
+
   // Render product display
   function renderProduct(index) {
     const product = products[index];
     if (!product) return;
+
+    // Reset to first variant when switching products
+    currentVariantIndex = 0;
+    const currentImage = product.variants && product.variants.length > 0 
+      ? product.variants[0].image 
+      : product.image;
 
     const displayEl = document.getElementById('product-display');
     if (!displayEl) return;
@@ -73,10 +82,29 @@ const { products } = Astro.props;
       <div class="slide-in-right">
         <!-- Image Container -->
         <div class="image-container relative h-80 md:h-96 rounded-2xl overflow-hidden group shadow-2xl">
-          <div class="absolute inset-0 bg-gradient-to-br ${product.color} opacity-20"></div>
-          <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-br opacity-20"></div>
+          <img id="product-image" src="${currentImage}" alt="${product.name}" class="w-full h-full object-cover" />
           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
+
+        <!-- Variant Selector (if variants exist) -->
+        ${product.variants && product.variants.length > 0 ? `
+          <div class="flex gap-2 flex-wrap mt-4 justify-center mb-4">
+            ${product.variants.slice(0, 4).map((variant, idx) => `
+              <button 
+                class="variant-btn px-4 py-2 rounded-lg border-2 transition-all font-medium ${
+                  idx === 0 
+                    ? 'bg-emerald-600 text-white border-emerald-600' 
+                    : 'bg-white text-slate-700 border-slate-200 hover:border-emerald-300'
+                }"
+                data-variant-index="${idx}"
+                data-variant-image="${variant.image}"
+              >
+                ${variant.name}
+              </button>
+            `).join('')}
+          </div>
+        ` : ''}
 
         <!-- Product Info -->
         <div class="space-y-4">
@@ -85,7 +113,7 @@ const { products } = Astro.props;
         </div>
 
         <!-- Specifications -->
-        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 my-4">
           <h3 class="text-xl font-bold text-slate-900 mb-4">Spesifikasi Produk</h3>
           <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
             ${product.specs.map(spec => `
@@ -98,7 +126,7 @@ const { products } = Astro.props;
         </div>
 
         <!-- Grades -->
-        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 my-4">
           <h3 class="text-xl font-bold text-slate-900 mb-4">Varian Tersedia</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             ${product.grades.map((grade, idx) => `
@@ -110,7 +138,7 @@ const { products } = Astro.props;
                   <p class="font-semibold text-slate-900">${grade.name}</p>
                   <p class="text-sm text-slate-600">${grade.detail}</p>
                 </div>
-                <span class="text-emerald-600 group-hover:translate-x-1 transition-transform">→</span>
+                <span class="text-emerald-600 group-hover:translate-x-1 transition-transform"></span>
               </div>
             `).join('')}
           </div>
@@ -122,6 +150,31 @@ const { products } = Astro.props;
         </a>
       </div>
     `;
+
+    // Add event listeners for variant buttons
+    const variantBtns = displayEl.querySelectorAll('.variant-btn');
+    variantBtns.forEach((btn) => {
+      btn.addEventListener('click', function() {
+        const variantIndex = parseInt(this.dataset.variantIndex);
+        const variantImage = this.dataset.variantImage;
+        
+        // Update active variant button
+        variantBtns.forEach(b => {
+          b.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-600');
+          b.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
+        });
+        this.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
+        this.classList.add('bg-emerald-600', 'text-white', 'border-emerald-600');
+
+        // Update image
+        const productImage = document.getElementById('product-image');
+        if (productImage) {
+          productImage.src = variantImage;
+        }
+
+        currentVariantIndex = variantIndex;
+      });
+    });
   }
 
   // Initialize

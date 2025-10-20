@@ -1,12 +1,253 @@
 ---
+import logo from "../assets/main-logo.png"
+
+// src/components/Footer.astro
+
+const currentYear = new Date().getFullYear();
+
+const footerLinks = {
+  company: [
+    { label: 'Tentang Kami', href: '/about' },
+    { label: 'Produk', href: '/service' },
+    { label: 'Kontak', href: '/contact' }
+  ],
+  products: [
+    { label: 'Meat Bone Meal', href: '/service' },
+    { label: 'Poultry Meat Meal', href: '/service' },
+    { label: 'Garam Pakan', href: '/service' },
+    { label: 'CHITO FARM', href: '/service' }
+  ],
+  contact: [
+    { label: 'Hubungi Kami', href: '/contact' },
+    { label: 'Lokasi Kantor', href: '/contact#location' },
+    { label: 'WhatsApp', href: 'https://wa.me/6282216072452', external: true }
+  ]
+};
+
+const locations = [
+  { name: 'Bekasi', icon: '📍' },
+  { name: 'Bogor', icon: '📍' },
+  { name: 'Lampung', icon: '📍' },
+  { name: 'Medan', icon: '📍' },
+  { name: 'Surabaya', icon: '📍' }
+];
 ---
-<footer class="border-t border-zinc-100">
-  <div class="container py-10 text-sm text-muted flex flex-col md:flex-row items-center justify-between gap-4">
-    <p>© {new Date().getFullYear()} CSN. All rights reserved.</p>
-    <div class="flex items-center gap-6">
-      <a href="/about" class="hover:text-brand">Tentang</a>
-      <a href="/products" class="hover:text-brand">Produk</a>
-      <a href="/contact" class="hover:text-brand">Kontak</a>
+
+<style>
+  .footer-link {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .footer-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #10b981, #059669);
+    transition: width 0.3s ease;
+  }
+
+  .footer-link:hover::after {
+    width: 100%;
+  }
+
+  .footer-link:hover {
+    color: #10b981;
+    transform: translateX(4px);
+  }
+
+  .location-badge {
+    transition: all 0.3s ease;
+  }
+
+  .location-badge:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  }
+
+  .social-link {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .social-link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+  }
+</style>
+
+<footer class="bg-slate-900 text-white border-t border-slate-800">
+  <!-- Main Footer -->
+  <div class="container mx-auto max-w-7xl px-4 py-16 md:py-20">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+      <!-- Company Info -->
+      <div class="lg:col-span-1">
+        <div class="flex items-center gap-3 mb-6">
+          <img src=`${logo.src}` alt="Logo" class="w-12 h-8">
+          <div>
+            <h3 class="font-bold text-lg">Cempaka Selaras</h3>
+            <h3 class="font-bold text-lg">Nusantara</h3>
+          </div>
+        </div>
+        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+          Supplier & distributor bahan baku pakan ternak terpercaya sejak 2018. Tangan pertama, tanpa perantara.
+        </p>
+        
+        <!-- Social Links -->
+        <div class="flex items-center">
+          <a  
+            href="https://wa.me/6282216072452" 
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link w-8 h-8 bg-transparent hover:bg-emerald-500 rounded-lg flex items-center justify-center"
+            aria-label="WhatsApp"
+          >
+            <svg width="181px" height="181px" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.144"></g><g id="SVGRepo_iconCarrier"> <path d="M2 22L3.41152 16.8691C2.54422 15.3639 2.08876 13.6568 2.09099 11.9196C2.08095 6.44549 6.52644 2 11.99 2C14.6417 2 17.1315 3.02806 19.0062 4.9034C19.9303 5.82266 20.6627 6.91616 21.1611 8.12054C21.6595 9.32492 21.9139 10.6162 21.9096 11.9196C21.9096 17.3832 17.4641 21.8287 12 21.8287C10.3368 21.8287 8.71374 21.4151 7.26204 20.6192L2 22ZM7.49424 18.8349L7.79675 19.0162C9.06649 19.7676 10.5146 20.1644 11.99 20.1654C16.5264 20.1654 20.2263 16.4662 20.2263 11.9291C20.2263 9.73176 19.3696 7.65554 17.8168 6.1034C17.0533 5.33553 16.1453 4.72636 15.1453 4.31101C14.1452 3.89565 13.0728 3.68232 11.99 3.68331C7.44343 3.6839 3.74476 7.38316 3.74476 11.9202C3.74476 13.4724 4.17843 14.995 5.00502 16.3055L5.19645 16.618L4.35982 19.662L7.49483 18.8354L7.49424 18.8349Z" fill="#ffffff"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M9.52024 7.76662C9.33885 7.35303 9.13737 7.34298 8.96603 7.34298C8.81477 7.33294 8.65288 7.33294 8.48154 7.33294C8.32083 7.33294 8.04845 7.39321 7.81684 7.64549C7.58464 7.89719 6.95007 8.49217 6.95007 9.71167C6.95007 10.9318 7.83693 12.1111 7.95805 12.2724C8.07858 12.4337 9.67149 15.0139 12.192 16.0124C14.2883 16.839 14.712 16.6777 15.1657 16.6269C15.6189 16.5767 16.6275 16.0325 16.839 15.4476C17.0405 14.8733 17.0405 14.3693 16.9802 14.2682C16.9199 14.1678 16.748 14.1069 16.5064 13.9758C16.2541 13.8552 15.0446 13.2502 14.813 13.1693C14.5808 13.0889 14.4195 13.0487 14.2582 13.2904C14.0969 13.5427 13.623 14.0969 13.4724 14.2582C13.3306 14.4195 13.1799 14.4396 12.9377 14.3185C12.686 14.1979 11.8895 13.9356 10.9418 13.0889C10.2056 12.4331 9.71167 11.6171 9.56041 11.3755C9.41979 11.1232 9.54032 10.992 9.67149 10.8709C9.78257 10.7604 9.92378 10.579 10.0449 10.4378C10.1654 10.296 10.2056 10.1855 10.2966 10.0242C10.377 9.86292 10.3368 9.71167 10.2765 9.59114C10.2157 9.48006 9.74239 8.25997 9.52024 7.76603V7.76662Z" fill="#ffffff"></path> </g></svg>
+          </a>
+          <!-- <a 
+            href="tel:082216072452" 
+            class="social-link w-10 h-10 bg-emerald-600 hover:bg-emerald-500 rounded-lg flex items-center justify-center"
+            aria-label="Phone"
+          >
+            <span class="text-lg">📞</span>
+          </a> -->
+          <a 
+            href="mailto:contact@csn.id" 
+            class="social-link w-10 h-10 bg-transparent hover:bg-emerald-500 rounded-lg flex items-center justify-center"
+            aria-label="Email"
+          >
+            <svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 19H6.2C5.0799 19 4.51984 19 4.09202 18.782C3.71569 18.5903 3.40973 18.2843 3.21799 17.908C3 17.4802 3 16.9201 3 15.8V8.2C3 7.0799 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.0799 5 6.2 5H17.8C18.9201 5 19.4802 5 19.908 5.21799C20.2843 5.40973 20.5903 5.71569 20.782 6.09202C21 6.51984 21 7.0799 21 8.2V10M20.6067 8.26229L15.5499 11.6335C14.2669 12.4888 13.6254 12.9165 12.932 13.0827C12.3192 13.2295 11.6804 13.2295 11.0677 13.0827C10.3743 12.9165 9.73279 12.4888 8.44975 11.6335L3.14746 8.09863M14 21L16.025 20.595C16.2015 20.5597 16.2898 20.542 16.3721 20.5097C16.4452 20.4811 16.5147 20.4439 16.579 20.399C16.6516 20.3484 16.7152 20.2848 16.8426 20.1574L21 16C21.5523 15.4477 21.5523 14.5523 21 14C20.4477 13.4477 19.5523 13.4477 19 14L14.8426 18.1574C14.7152 18.2848 14.6516 18.3484 14.601 18.421C14.5561 18.4853 14.5189 18.5548 14.4903 18.6279C14.458 18.7102 14.4403 18.7985 14.405 18.975L14 21Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Perusahaan -->
+      <div>
+        <h4 class="font-bold text-lg mb-6 text-white">Perusahaan</h4>
+        <ul class="space-y-3">
+          {footerLinks.company.map((link) => (
+            <li>
+              <a href={link.href} class="footer-link text-slate-400 hover:text-emerald-400 text-sm inline-block">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Produk -->
+      <div>
+        <h4 class="font-bold text-lg mb-6 text-white">Produk Kami</h4>
+        <ul class="space-y-3">
+          {footerLinks.products.map((link) => (
+            <li>
+              <a href={link.href} class="footer-link text-slate-400 hover:text-emerald-400 text-sm inline-block">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Kontak & Lokasi -->
+      <div>
+        <h4 class="font-bold text-lg mb-6 text-white">Hubungi Kami</h4>
+        <ul class="space-y-3 mb-6">
+          {footerLinks.contact.map((link) => (
+            <li>
+              <a 
+                href={link.href} 
+                class="footer-link text-slate-400 hover:text-emerald-400 text-sm inline-block"
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noopener noreferrer' : undefined}
+              >
+                {link.label}
+                {link.external && <span class="ml-1">↗</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <div>
+          <p class="text-xs text-slate-500 font-semibold mb-3 uppercase tracking-wider">Lokasi Gudang</p>
+          <div class="flex flex-wrap gap-2">
+            {locations.map((loc) => (
+              <span class="location-badge inline-flex items-center gap-1 px-3 py-1.5 bg-slate-800 hover:bg-emerald-900 border border-slate-700 hover:border-emerald-700 rounded-lg text-xs text-slate-300 hover:text-emerald-400">
+                <span>{loc.icon}</span>
+                <span>{loc.name}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- Bottom Bar -->
+  <div class="border-t border-slate-800">
+    <div class="container mx-auto max-w-7xl px-4 py-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-400">
+        <p>
+          © {currentYear} <span class="text-emerald-400 font-semibold">CV. Cempaka Selaras Nusantara</span>. All rights reserved.
+        </p>
+        <div class="flex items-center gap-6">
+          <a href="/privacy" class="hover:text-emerald-400 transition-colors">Privacy Policy</a>
+          <a href="/terms" class="hover:text-emerald-400 transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back to Top Button -->
+  <!-- <button
+    id="back-to-top"
+    class="fixed bottom-8 right-8 w-12 h-12 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full shadow-lg opacity-0 invisible transition-all duration-300 flex items-center justify-center z-50"
+    aria-label="Back to top"
+  >
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    </svg>
+  </button> -->
 </footer>
+
+<script>
+  function initBackToTop() {
+    const backToTopBtn = document.getElementById('back-to-top');
+    
+    if (!backToTopBtn) return;
+
+    // Show/hide button based on scroll position
+    function toggleBackToTop() {
+      if (window.scrollY > 300) {
+        backToTopBtn?.classList.remove('opacity-0', 'invisible');
+        backToTopBtn?.classList.add('opacity-100', 'visible');
+      } else {
+        backToTopBtn?.classList.remove('opacity-100', 'visible');
+        backToTopBtn?.classList.add('opacity-0', 'invisible');
+      }
+    }
+
+    // Scroll to top smoothly
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Listen to scroll events
+    window.addEventListener('scroll', toggleBackToTop);
+    
+    // Initial check
+    toggleBackToTop();
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBackToTop);
+  } else {
+    initBackToTop();
+  }
+</script>
